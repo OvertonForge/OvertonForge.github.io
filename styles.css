@@ -1,56 +1,66 @@
 /* ============================================================
-   Overton Forge — styles.css
-   Design system from Brand Brief v1 (2026-05-09).
-   Dark-mode first. CRT/archive/server-room with Apple polish.
+   Overton Forge — styles.css  (Warm Heritage palette)
+   Derived from the actual logo: iron-oxide flame on coal-black,
+   cream serif wordmark. Heritage workshop with modern restraint.
+
+   The earlier cool/streaming palette is preserved in
+   styles.recaptr-palette.css for reuse on Recaptr's eventual site.
    ============================================================ */
 
 /* -------------------- Tokens -------------------- */
 
 :root {
-  /* Brand palette — from brief §4 */
-  --of-graphite:  #1B1F23;          /* primary background */
-  --of-graphite-2: #242A30;         /* surface */
-  --of-graphite-3: #2C333B;         /* elevated surface */
-  --of-signal:    #8DFCB7;          /* CRT green / signal */
-  --of-violet:    #A179F2;          /* atmosphere */
-  --of-restore:   #5EB2D6;          /* action / CTA */
-  --of-beige:     #CFCAC2;          /* warm text */
-  --of-beige-bright: #F4F0E8;       /* high-contrast text */
+  /* Brand palette — derived from the logo */
+  --of-coal:        #15110E;   /* near-black with warm undertone, primary bg */
+  --of-coal-2:      #1F1A17;   /* surface */
+  --of-coal-3:      #2A2420;   /* elevated surface */
 
-  /* Functional */
-  --color-bg:        var(--of-graphite);
-  --color-surface:   var(--of-graphite-2);
-  --color-surface-2: var(--of-graphite-3);
-  --color-text:      var(--of-beige);
-  --color-text-bright: var(--of-beige-bright);
-  --color-text-muted: rgba(207, 202, 194, 0.62);
-  --color-text-dim:   rgba(207, 202, 194, 0.38);
+  --of-ember:        #B83228;  /* flame red — primary brand mark, primary CTA */
+  --of-ember-bright: #D44B3E;  /* hover / hot state */
+  --of-ember-glow:   #E89A3F;  /* amber glow — "live"/"active" semantic */
+  --of-copper:       #9C7A3A;  /* burnished mid-tone, third card-tint */
 
-  --color-border:        rgba(207, 202, 194, 0.10);
-  --color-border-strong: rgba(207, 202, 194, 0.20);
-  --color-border-signal: rgba(141, 252, 183, 0.35);
+  --of-cream:       #E8DFCE;   /* high-contrast text / headings */
+  --of-cream-warm:  #C8BAA0;   /* body text */
+  --of-cream-dim:   rgba(232, 223, 206, 0.50);
+  --of-cream-muted: rgba(232, 223, 206, 0.70);
 
-  /* Per-card tint maps (referenced via data-tint attribute) */
-  --tint-restore:   var(--of-restore);
-  --tint-signal:    var(--of-signal);
-  --tint-violet:    var(--of-violet);
+  --of-iron:        #4A3F36;   /* borders, dividers */
+
+  /* Functional aliases */
+  --color-bg:        var(--of-coal);
+  --color-surface:   var(--of-coal-2);
+  --color-surface-2: var(--of-coal-3);
+  --color-text:      var(--of-cream-warm);
+  --color-text-bright: var(--of-cream);
+  --color-text-muted: var(--of-cream-muted);
+  --color-text-dim:   var(--of-cream-dim);
+
+  --color-border:        rgba(74, 63, 54, 0.55);
+  --color-border-strong: rgba(200, 186, 160, 0.18);
+  --color-border-ember:  rgba(184, 50, 40, 0.45);
+
+  /* Per-card tint maps */
+  --tint-ember:   var(--of-ember);
+  --tint-amber:   var(--of-ember-glow);
+  --tint-copper:  var(--of-copper);
 
   /* Gradients */
-  --gradient-signal: linear-gradient(
+  --gradient-fire: linear-gradient(
     135deg,
-    var(--of-restore) 0%,
-    var(--of-violet) 52%,
-    var(--of-signal) 100%
+    var(--of-ember) 0%,
+    var(--of-ember-bright) 48%,
+    var(--of-ember-glow) 100%
   );
   --gradient-hero-glow: radial-gradient(
-    ellipse 80% 60% at 50% 0%,
-    rgba(94, 178, 214, 0.18) 0%,
-    rgba(161, 121, 242, 0.10) 35%,
+    ellipse 80% 55% at 50% 0%,
+    rgba(184, 50, 40, 0.20) 0%,
+    rgba(232, 154, 63, 0.10) 35%,
     transparent 70%
   );
 
   /* Typography */
-  --font-heading: "Space Grotesk", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: "Fraunces", "Source Serif 4", "PT Serif", Georgia, "Times New Roman", serif;
   --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 
@@ -60,12 +70,12 @@
   --container-pad-x: clamp(24px, 5vw, 40px);
 
   /* Radii */
-  --radius-card: 18px;
+  --radius-card: 14px;       /* tighter — heritage feel, less SaaS */
   --radius-chip: 999px;
 
   /* Shadows */
-  --shadow-card: 0 24px 80px rgba(0, 0, 0, 0.40);
-  --shadow-card-hover: 0 28px 90px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--color-border-signal);
+  --shadow-card: 0 24px 80px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover: 0 28px 90px rgba(0, 0, 0, 0.70), 0 0 0 1px var(--color-border-ember);
 }
 
 /* -------------------- Reset -------------------- */
@@ -102,12 +112,12 @@ svg {
 }
 
 a {
-  color: var(--of-restore);
+  color: var(--of-ember-bright);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--of-signal);
+  color: var(--of-ember-glow);
 }
 
 ul {
@@ -120,8 +130,8 @@ button {
 }
 
 ::selection {
-  background: var(--of-violet);
-  color: var(--of-beige-bright);
+  background: var(--of-ember);
+  color: var(--of-cream);
 }
 
 /* -------------------- Typography -------------------- */
@@ -129,18 +139,21 @@ button {
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
   color: var(--color-text-bright);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   line-height: 1.1;
+  font-feature-settings: "ss01", "ss02";
 }
 
 h2 {
-  font-size: clamp(2rem, 4.2vw, 3.25rem);
+  font-size: clamp(2rem, 4.2vw, 3rem);
   margin-top: 0.5rem;
+  font-weight: 600;
 }
 
 h3 {
   font-size: 1.5rem;
+  font-weight: 600;
 }
 
 h4 {
@@ -198,7 +211,7 @@ p {
 .section-header .mono-tag {
   display: inline-block;
   margin-bottom: 14px;
-  color: var(--of-restore);
+  color: var(--of-ember);
 }
 
 /* -------------------- Status strip -------------------- */
@@ -210,7 +223,7 @@ p {
   gap: 12px;
   padding: 10px var(--container-pad-x);
   border-bottom: 1px solid var(--color-border);
-  background: rgba(27, 31, 35, 0.85);
+  background: rgba(21, 17, 14, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   font-family: var(--font-mono);
@@ -224,8 +237,8 @@ p {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--of-signal);
-  box-shadow: 0 0 12px var(--of-signal);
+  background: var(--of-ember-glow);
+  box-shadow: 0 0 12px var(--of-ember-glow);
 }
 
 .status-dot.pulse {
@@ -256,10 +269,10 @@ p {
   position: absolute;
   inset: 0;
   z-index: -2;
-  opacity: 0.35;
+  opacity: 0.30;
   background-image:
-    linear-gradient(to right, rgba(207, 202, 194, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(207, 202, 194, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(200, 186, 160, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(200, 186, 160, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
   mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 0%, transparent 75%);
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 0%, transparent 75%);
@@ -278,16 +291,18 @@ p {
 }
 
 .hero-headline {
+  font-family: var(--font-heading);
   font-size: clamp(2.4rem, 6.5vw, 4.6rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1.05;
   margin-bottom: 1.4rem;
   color: var(--color-text-bright);
+  font-feature-settings: "ss01", "ss02";
 }
 
 .hero-accent {
-  background: var(--gradient-signal);
+  background: var(--gradient-fire);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -329,15 +344,15 @@ p {
 }
 
 .btn-primary {
-  background: var(--of-restore);
-  color: var(--of-graphite);
-  border-color: var(--of-restore);
+  background: var(--of-ember);
+  color: var(--of-cream);
+  border-color: var(--of-ember);
 }
 
 .btn-primary:hover {
-  background: var(--of-signal);
-  border-color: var(--of-signal);
-  color: var(--of-graphite);
+  background: var(--of-ember-bright);
+  border-color: var(--of-ember-bright);
+  color: var(--of-cream);
 }
 
 .btn-secondary {
@@ -347,8 +362,8 @@ p {
 }
 
 .btn-secondary:hover {
-  border-color: var(--of-restore);
-  color: var(--of-restore);
+  border-color: var(--of-ember);
+  color: var(--of-ember-glow);
 }
 
 .btn-arrow {
@@ -393,13 +408,17 @@ p {
   inset: 0;
   z-index: -1;
   background: linear-gradient(180deg, var(--card-tint, transparent) 0%, transparent 40%);
-  opacity: 0.06;
+  opacity: 0.07;
   pointer-events: none;
 }
 
-.project-card[data-tint="restore"] { --card-tint: var(--tint-restore); }
-.project-card[data-tint="signal"]  { --card-tint: var(--tint-signal); }
-.project-card[data-tint="violet"]  { --card-tint: var(--tint-violet); }
+/* Updated tint mapping for warm palette.
+   ember = primary lead (ChainKeeper)
+   amber = live/media accent (Back-Up Drive)
+   copper = burnished mid-tone (Recaptr, Liquid Depths) */
+.project-card[data-tint="restore"] { --card-tint: var(--tint-ember); }
+.project-card[data-tint="signal"]  { --card-tint: var(--tint-amber); }
+.project-card[data-tint="violet"]  { --card-tint: var(--tint-copper); }
 
 .project-card:hover {
   transform: translateY(-3px);
@@ -416,14 +435,17 @@ p {
 }
 
 .project-name {
-  font-size: 1.65rem;
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  font-weight: 600;
   margin-bottom: 12px;
   color: var(--color-text-bright);
+  letter-spacing: -0.015em;
 }
 
 .project-desc {
   font-size: 0.95rem;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--color-text);
   margin-bottom: 18px;
   flex-grow: 1;
@@ -459,12 +481,12 @@ p {
   font-family: var(--font-body);
   font-size: 0.92rem;
   font-weight: 600;
-  color: var(--card-tint, var(--of-restore));
+  color: var(--card-tint, var(--of-ember-bright));
   transition: color 0.15s ease, transform 0.15s ease;
 }
 
 .project-link:hover {
-  color: var(--of-signal);
+  color: var(--of-ember-glow);
 }
 
 .project-link:hover .arrow {
@@ -511,21 +533,21 @@ p {
 }
 
 .status-chip.status-active {
-  color: var(--of-signal);
-  border-color: rgba(141, 252, 183, 0.30);
-  background: rgba(141, 252, 183, 0.06);
+  color: var(--of-ember-glow);
+  border-color: rgba(232, 154, 63, 0.35);
+  background: rgba(232, 154, 63, 0.07);
 }
 
 .status-chip.status-active::before {
-  background: var(--of-signal);
-  box-shadow: 0 0 8px var(--of-signal);
+  background: var(--of-ember-glow);
+  box-shadow: 0 0 8px var(--of-ember-glow);
   animation: dotPulse 2.4s ease-in-out infinite;
 }
 
 .status-chip.status-planning {
-  color: var(--of-restore);
-  border-color: rgba(94, 178, 214, 0.30);
-  background: rgba(94, 178, 214, 0.06);
+  color: var(--of-cream-warm);
+  border-color: rgba(200, 186, 160, 0.22);
+  background: rgba(200, 186, 160, 0.04);
 }
 
 .status-chip.status-paused {
@@ -554,7 +576,7 @@ p {
 
 .principle-num {
   flex-shrink: 0;
-  color: var(--of-restore);
+  color: var(--of-ember);
   font-size: 0.78rem;
   padding-top: 4px;
   min-width: 30px;
@@ -562,6 +584,9 @@ p {
 
 .principles h4 {
   margin-bottom: 6px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.15rem;
 }
 
 .principles p {
@@ -587,7 +612,7 @@ p {
 }
 
 .contact-card:hover:not(.disabled) {
-  border-color: var(--of-restore);
+  border-color: var(--of-ember);
   transform: translateY(-2px);
 }
 
@@ -597,7 +622,9 @@ p {
 }
 
 .contact-card h3 {
-  font-size: 1.35rem;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
   margin-bottom: 8px;
   color: var(--color-text-bright);
 }
@@ -627,7 +654,7 @@ p {
   padding: 60px 0 36px;
   margin-top: 80px;
   border-top: 1px solid var(--color-border);
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.25) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.30) 100%);
 }
 
 .footer-grid {
@@ -642,16 +669,18 @@ p {
 .wordmark {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: 0.02em;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
   color: var(--color-text-bright);
   margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
 .footer-tagline {
   font-size: 0.92rem;
   color: var(--color-text-muted);
   max-width: 360px;
+  font-style: italic;
 }
 
 .footer-nav {
@@ -667,7 +696,7 @@ p {
 }
 
 .footer-nav a:hover {
-  color: var(--of-restore);
+  color: var(--of-ember-glow);
 }
 
 .footer-bottom {
@@ -732,7 +761,7 @@ p {
 }
 
 :focus-visible {
-  outline: 2px solid var(--of-restore);
+  outline: 2px solid var(--of-ember-bright);
   outline-offset: 3px;
   border-radius: 4px;
 }
