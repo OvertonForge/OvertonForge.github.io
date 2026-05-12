@@ -27,6 +27,16 @@
 
   --of-iron:        #4A3F36;   /* borders, dividers */
 
+  /* Recaptr cool-palette tokens (Phase 6.7) — used by the
+     data-palette="recaptr" project card to island its own
+     micro-environment without affecting the rest of the site.
+     Mirrors the tokens that ship in styles.recaptr-palette.css
+     and in Recaptr's own Brand.swift. */
+  --rc-graphite:    #1B1F23;
+  --rc-signal:      #8DFCB7;
+  --rc-violet:      #A179F2;
+  --rc-restore:     #5EB2D6;
+
   /* Functional aliases */
   --color-bg:        var(--of-coal);
   --color-surface:   var(--of-coal-2);
@@ -426,6 +436,46 @@ p {
   border-color: var(--card-tint, var(--color-border-strong));
 }
 
+/* -------------------- Recaptr palette accent (Phase 6.7) -------------------- */
+/*
+   Recaptr's brand palette is cool (graphite + signal-green + violet +
+   restore-blue) — the inverse of the warm Overton Forge palette. The
+   Recaptr card carries data-palette="recaptr" and gets a localized
+   palette swap: the gradient fade-in uses cool tokens, the hover border
+   lights up signal-green instead of ember-red, and the link text reads
+   in restore-blue. Everything else on the page stays in the warm
+   heritage palette — a single-card preview of the broader
+   "hover-shifts-ambient-palette" effect coming in a later pass. */
+
+.project-card[data-palette="recaptr"]::before {
+  background: linear-gradient(
+    180deg,
+    rgba(94, 178, 214, 0.28) 0%,
+    rgba(161, 121, 242, 0.16) 35%,
+    transparent 70%
+  );
+  opacity: 0.55;
+}
+
+.project-card[data-palette="recaptr"]:hover {
+  border-color: rgba(141, 252, 183, 0.55);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.70),
+              0 0 0 1px rgba(141, 252, 183, 0.45),
+              0 0 60px -10px rgba(141, 252, 183, 0.30);
+}
+
+.project-card[data-palette="recaptr"] .project-link {
+  color: var(--rc-restore);
+}
+
+.project-card[data-palette="recaptr"] .project-link:hover {
+  color: var(--rc-signal);
+}
+
+.project-card[data-palette="recaptr"] .project-link .arrow {
+  color: inherit;
+}
+
 .project-card-head {
   display: flex;
   align-items: center;
@@ -552,6 +602,21 @@ p {
 
 .status-chip.status-paused {
   color: var(--color-text-muted);
+}
+
+/* Phase 6.7 — Beta status chip uses Recaptr signal-green. Carried in
+   the OF stylesheet so any project can pick it up without needing the
+   recaptr-palette stylesheet loaded. */
+.status-chip.status-beta {
+  color: var(--rc-signal);
+  border-color: rgba(141, 252, 183, 0.40);
+  background: rgba(141, 252, 183, 0.08);
+}
+
+.status-chip.status-beta::before {
+  background: var(--rc-signal);
+  box-shadow: 0 0 10px rgba(141, 252, 183, 0.75);
+  animation: dotPulse 2.4s ease-in-out infinite;
 }
 
 /* -------------------- Philosophy -------------------- */
@@ -755,7 +820,8 @@ p {
   }
 
   .status-dot.pulse,
-  .status-chip.status-active::before {
+  .status-chip.status-active::before,
+  .status-chip.status-beta::before {
     animation: none;
   }
 }
